@@ -1,18 +1,43 @@
+# ── IDE & Editor ──────────────────────────────────────────────
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# ── OS ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Java / Maven ──────────────────────────────────────────────
 stock-market-service/.idea/
 stock-market-service/.mvn/
 stock-market-service/target/
 stock-trading-service/.idea/
 stock-trading-service/.mvn/
 stock-trading-service/target/
+mvnw
+mvnw.cmd
+HELP.md
+*.class
+*.jar
+*.war
+
+# ── Frontend / Node ───────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vscode
+frontend/Data.js
+
+# ── Environment ───────────────────────────────────────────────
+.env
+text.txt
+
+# ── Log Parser ────────────────────────────────────────────────
 log-parser/logs/
 log-parser/duration_stats.txt
 log-parser/stock_stats.txt
-.idea/
-HELP.md
-mvnw
-mvnw.cmd
-.env
-frontend/Data.js
-frontend/.vscode
-text.txt
-.vscode
+
+# ── Markdown (keep only README) ───────────────────────────────
+*.md
+!README.md

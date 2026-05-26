@@ -1,9 +1,16 @@
+# docker-compose.yml — StockVault Simulator
+# Runs the Spring Boot backend + MySQL database in containers.
+# For local development without Docker, use the H2 profile instead:
+#   mvn spring-boot:run -Dspring-boot.run.profiles=local
+
 version: "3.8"
+
 services:
   stock-market-service:
-    build: 
+    build:
       context: stock-market-service
     image: stock-market-service
+    container_name: stock-market-service
     restart: always
     ports:
       - "8000:8000"
@@ -14,19 +21,25 @@ services:
       MYSQL_DATABASE: stock_market
       MYSQL_PORT: 3306
       SPRING_DATASOURCE_URL: jdbc:mysql://stock_market_db:3306/stock_market?createDatabaseIfNotExist=true
+      SPRING_PROFILES_ACTIVE: docker
     depends_on:
       stock_market_db:
         condition: service_healthy
 
   stock_market_db:
     container_name: stock_market_db
-    image: mysql
+    image: mysql:8.0
     ports:
       - "3307:3306"
     environment:
       MYSQL_DATABASE: stock_market
       MYSQL_ROOT_PASSWORD: password
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
+    volumes:
+      - stock_market_data:/var/lib/mysql
+
+volumes:
+  stock_market_data:
