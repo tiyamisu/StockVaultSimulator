@@ -1,5 +1,6 @@
 /* ============================================================
    Sidebar.css — Fixed Navigation Sidebar
+   Palette: Midnight Navy + Sunset Peach
    ============================================================ */
 
 .sidebar {
@@ -14,9 +15,10 @@
   flex-direction: column;
   z-index: 200;
   overflow: hidden;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.35);
 }
 
-/* Brand */
+/* ── Brand ──────────────────────────────────────────────────── */
 .sidebar-brand {
   padding: 18px 16px 14px;
   border-bottom: 1px solid var(--border);
@@ -24,19 +26,20 @@
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  background: linear-gradient(160deg, rgba(253,164,129,0.06) 0%, transparent 60%);
 }
 
 .sidebar-logo {
   width: 34px;
   height: 34px;
-  background: linear-gradient(135deg, var(--accent), var(--cyan));
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
   border-radius: var(--r-md);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 17px;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(108,99,255,0.3);
+  box-shadow: 0 4px 14px rgba(253,164,129,0.35);
 }
 
 .sidebar-brand-text {
@@ -56,13 +59,13 @@
 .sidebar-brand-tag {
   font-size: 9.5px;
   font-weight: 600;
-  color: var(--accent-light);
+  color: var(--accent);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   white-space: nowrap;
 }
 
-/* Nav */
+/* ── Nav ──────────────────────────────────────────────────── */
 .sidebar-nav {
   flex: 1;
   padding: 12px 10px;
@@ -105,14 +108,20 @@
 }
 
 .nav-link:hover {
-  background: var(--bg-glass-hover);
+  background: rgba(253,164,129,0.07);
   color: var(--text-primary);
+  border-color: rgba(253,164,129,0.1);
 }
 
 .nav-link.active {
-  background: rgba(108,99,255,0.12);
-  color: var(--accent-light);
-  border-color: rgba(108,99,255,0.2);
+  background: rgba(253,164,129,0.13);
+  color: var(--accent);
+  border-color: rgba(253,164,129,0.25);
+  font-weight: 600;
+}
+
+.nav-link.active .nav-icon {
+  color: var(--accent);
 }
 
 .nav-link .nav-icon {
@@ -124,7 +133,7 @@
 .nav-link .nav-badge {
   margin-left: auto;
   background: var(--accent);
-  color: white;
+  color: var(--text-inverse);
   font-size: 9.5px;
   font-weight: 700;
   padding: 1px 6px;
@@ -134,16 +143,16 @@
   flex-shrink: 0;
 }
 
-/* Market status */
+/* ── Market status ────────────────────────────────────────── */
 .market-status {
   display: flex;
   align-items: center;
   gap: 7px;
   padding: 8px 10px;
   margin: 2px 0;
-  background: var(--bg-glass);
+  background: rgba(45,212,160,0.06);
   border-radius: var(--r-md);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(45,212,160,0.15);
   flex-shrink: 0;
 }
 
@@ -162,11 +171,12 @@
   font-weight: 600;
 }
 
-/* User footer */
+/* ── User footer ──────────────────────────────────────────── */
 .sidebar-footer {
   padding: 12px 10px;
   border-top: 1px solid var(--border);
   flex-shrink: 0;
+  background: linear-gradient(0deg, rgba(84,22,43,0.12) 0%, transparent 100%);
 }
 
 .user-card {
@@ -181,21 +191,22 @@
 }
 
 .user-card:hover {
-  background: var(--bg-glass-hover);
+  background: rgba(253,164,129,0.07);
 }
 
 .user-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--cyan));
+  background: linear-gradient(135deg, var(--accent), var(--plum));
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 13px;
   font-weight: 700;
-  color: white;
+  color: #fff;
   flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(253,164,129,0.3);
 }
 
 .user-name {
@@ -235,6 +246,6 @@
 }
 
 .logout-btn:hover {
-  background: rgba(255,71,87,0.1);
-  color: var(--red);
+  background: rgba(180,24,45,0.12);
+  color: var(--danger);
 }

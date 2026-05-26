@@ -3,9 +3,7 @@
 // ============================================================
 
 import { useState } from "react";
-import { useApp } from "../context/AppContext";
-import { formatCurrency } from "../utils/stockSimulator";
-import { TrendingUp, TrendingDown, Filter } from "lucide-react";
+import { ArrowUpCircle, ArrowDownCircle, ClipboardList, TrendingUp, TrendingDown, Filter } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Transactions() {
@@ -62,11 +60,14 @@ export default function Transactions() {
         {["ALL", "BUY", "SELL"].map((f) => (
           <button key={f} className="btn btn-sm btn-ghost" onClick={() => setFilter(f)}
             style={{
-              background: filter === f ? "rgba(108,99,255,0.15)" : "",
-              color: filter === f ? "var(--accent-light)" : "",
-              borderColor: filter === f ? "rgba(108,99,255,0.3)" : "",
+              background: filter === f ? "rgba(253,164,129,0.15)" : "",
+              color: filter === f ? "var(--accent)" : "",
+              borderColor: filter === f ? "rgba(253,164,129,0.35)" : "",
             }}>
-            {f === "ALL" ? "All Trades" : f === "BUY" ? "🟢 Buys" : "🔴 Sells"}
+            {f === "ALL" ? "All Trades"
+              : f === "BUY"
+                ? <><ArrowUpCircle size={12} style={{ color: "var(--green)" }} /> Buys</>
+                : <><ArrowDownCircle size={12} style={{ color: "var(--red)" }} /> Sells</>}
           </button>
         ))}
         <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--text-muted)" }}>
@@ -78,7 +79,7 @@ export default function Transactions() {
       {filtered.length === 0 ? (
         <div className="glass-card">
           <div className="empty-state">
-            <div className="empty-state-icon">📋</div>
+            <div className="empty-state-icon"><ClipboardList size={38} strokeWidth={1.5} color="var(--text-muted)" /></div>
             <div className="empty-state-text">No transactions yet</div>
             <div className="empty-state-sub">Your trade history will appear here</div>
             <button className="btn btn-primary" style={{ marginTop: 16 }} onClick={() => navigate("/market")}>

@@ -21,8 +21,14 @@ export default function Ticker() {
             <span className="ticker-item" key={`${stock.ticker}-${idx}`}>
               <span className="ticker-symbol">{stock.ticker}</span>
               <span className="ticker-price">${stock.price.toFixed(2)}</span>
-              <span style={{ color: isUp ? "var(--green)" : "var(--red)", fontWeight: 700, fontSize: 12 }}>
-                {isUp ? "▲" : "▼"} {Math.abs(stock.changePercent).toFixed(2)}%
+              <span style={{ color: isUp ? "var(--green)" : "var(--red)", fontWeight: 700, fontSize: 12, display: "inline-flex", alignItems: "center", gap: 2 }}>
+                <span style={{ display: "inline-block", width: 0, height: 0,
+                  borderLeft: "4px solid transparent", borderRight: "4px solid transparent",
+                  ...(isUp
+                    ? { borderBottom: "5px solid var(--green)" }
+                    : { borderTop: "5px solid var(--red)" })
+                }} />
+                {Math.abs(stock.changePercent).toFixed(2)}%
               </span>
             </span>
           );

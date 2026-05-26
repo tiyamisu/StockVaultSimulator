@@ -6,7 +6,7 @@
 import { useState } from "react";
 import { useApp } from "../context/AppContext";
 import { formatCurrency } from "../utils/stockSimulator";
-import { X, TrendingUp, TrendingDown, AlertCircle } from "lucide-react";
+import { X, TrendingUp, TrendingDown, AlertCircle, CheckCircle2, ShoppingCart, Banknote } from "lucide-react";
 
 /**
  * @param {Object} stock  - The stock being traded
@@ -66,8 +66,9 @@ export default function BuyModal({ stock, mode, onClose }) {
 
         {/* Success state */}
         {success && (
-          <div style={{ background: "var(--green-bg)", border: "1px solid var(--green)", borderRadius: "var(--r-md)", padding: "16px", textAlign: "center", color: "var(--green)", fontWeight: 700, fontSize: 16, marginBottom: 16 }}>
-            ✓ {mode === "BUY" ? "Purchase" : "Sale"} Successful!
+          <div style={{ background: "var(--green-bg)", border: "1px solid var(--green)", borderRadius: "var(--r-md)", padding: "16px", textAlign: "center", color: "var(--green)", fontWeight: 700, fontSize: 16, marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            <CheckCircle2 size={20} />
+            {mode === "BUY" ? "Purchase" : "Sale"} Successful!
           </div>
         )}
 
@@ -91,7 +92,7 @@ export default function BuyModal({ stock, mode, onClose }) {
                   <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 4 }}>
                     {mode === "BUY" ? "Available Cash" : "Shares Owned"}
                   </div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: mode === "BUY" ? "var(--cyan)" : "var(--accent-light)", fontFamily: "'JetBrains Mono', monospace" }}>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: mode === "BUY" ? "var(--accent)" : "var(--accent-light)", fontFamily: "'JetBrains Mono', monospace" }}>
                     {mode === "BUY" ? formatCurrency(state.walletBalance) : `${sharesOwned} shares`}
                   </div>
                 </div>
@@ -167,7 +168,7 @@ export default function BuyModal({ stock, mode, onClose }) {
 
             {/* Warning if can't afford */}
             {!canExecute && (
-              <div style={{ display: "flex", gap: 8, background: "var(--red-bg)", border: "1px solid rgba(255,71,87,0.3)", borderRadius: "var(--r-md)", padding: "12px", marginBottom: 16, color: "var(--red)", fontSize: 13 }}>
+              <div style={{ display: "flex", gap: 8, background: "var(--red-bg)", border: "1px solid rgba(180,24,45,0.35)", borderRadius: "var(--r-md)", padding: "12px", marginBottom: 16, color: "#ff6b7a", fontSize: 13 }}>
                 <AlertCircle size={16} style={{ flexShrink: 0, marginTop: 1 }} />
                 {mode === "BUY" ? "Insufficient funds. Reduce quantity or add more cash." : "You don't have enough shares to sell."}
               </div>
@@ -179,7 +180,9 @@ export default function BuyModal({ stock, mode, onClose }) {
               onClick={handleConfirm}
               disabled={!canExecute}
             >
-              {mode === "BUY" ? "🛒 Confirm Purchase" : "💰 Confirm Sale"}
+              {mode === "BUY"
+                ? <><ShoppingCart size={16} /> Confirm Purchase</>
+                : <><Banknote size={16} /> Confirm Sale</>}
             </button>
           </>
         )}

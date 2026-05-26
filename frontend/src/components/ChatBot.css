@@ -1,5 +1,6 @@
 /* ============================================================
    ChatBot.css — Fixed Floating TradeBot Widget
+   Palette: Midnight Navy + Sunset Peach + Crimson Red
    ============================================================ */
 
 /* ── Floating action button ───────────────────────────────── */
@@ -10,34 +11,35 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--cyan-dark));
-  color: white;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: var(--text-inverse);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 18px rgba(108,99,255,0.45);
+  box-shadow: 0 4px 20px rgba(253,164,129,0.45);
   transition: all var(--t-normal);
   z-index: 500;
   flex-shrink: 0;
 }
 
 .chatbot-fab:hover {
-  transform: scale(1.07);
-  box-shadow: 0 6px 24px rgba(108,99,255,0.6);
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(253,164,129,0.6);
 }
 
 .chatbot-fab.open {
-  background: linear-gradient(135deg, var(--red-dark), #aa2233);
-  box-shadow: 0 4px 18px rgba(255,71,87,0.4);
+  background: linear-gradient(135deg, var(--danger), var(--plum));
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(180,24,45,0.45);
 }
 
 .chatbot-badge {
   position: absolute;
   top: -3px;
   right: -3px;
-  background: var(--red);
+  background: var(--danger);
   color: white;
   font-size: 9.5px;
   font-weight: 800;
@@ -56,14 +58,13 @@
   bottom: 88px;
   right: 24px;
   width: 340px;
-  /* Use max-height + vh to keep it inside viewport */
   max-height: min(500px, calc(100vh - 110px));
   background: var(--bg-elevated);
-  border: 1px solid var(--border-active);
+  border: 1px solid rgba(253,164,129,0.3);
   border-radius: var(--r-xl);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 16px 50px rgba(0,0,0,0.65), 0 0 30px rgba(108,99,255,0.12);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.65), 0 0 30px rgba(253,164,129,0.08);
   z-index: 499;
   overflow: hidden;
 }
@@ -74,7 +75,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 14px;
-  background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(0,212,255,0.06));
+  background: linear-gradient(135deg, rgba(253,164,129,0.1), rgba(84,22,43,0.08));
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
@@ -83,12 +84,13 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--cyan-dark));
+  background: linear-gradient(135deg, var(--accent), var(--plum));
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(253,164,129,0.3);
 }
 
 .chatbot-close {
@@ -107,7 +109,7 @@
 /* ── Messages area ────────────────────────────────────────── */
 .chatbot-messages {
   flex: 1;
-  min-height: 0;           /* crucial: allows flex child to scroll */
+  min-height: 0;
   overflow-y: auto;
   padding: 14px;
   display: flex;
@@ -128,7 +130,7 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--cyan-dark));
+  background: linear-gradient(135deg, var(--accent), var(--plum));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,7 +141,7 @@
 .chat-bubble { max-width: 82%; min-width: 0; }
 
 .chat-message.bot .chat-bubble {
-  background: var(--bg-card);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: 14px 14px 14px 4px;
   padding: 9px 13px;
@@ -158,16 +160,16 @@
   word-break: break-word;
 }
 
-.chat-message.user .chat-text { color: white; }
+.chat-message.user .chat-text { color: var(--text-inverse); font-weight: 500; }
 .chat-text strong { font-weight: 700; }
-.chat-text em     { font-style: italic; color: var(--cyan); }
+.chat-text em     { font-style: italic; color: var(--accent); }
 
 .chat-time {
   font-size: 10px;
   color: var(--text-muted);
   margin-top: 3px;
 }
-.chat-message.user .chat-time { text-align: right; color: rgba(255,255,255,0.45); }
+.chat-message.user .chat-time { text-align: right; color: rgba(24,26,47,0.55); }
 
 /* ── Typing indicator ─────────────────────────────────────── */
 .typing-indicator {
@@ -181,8 +183,9 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--text-muted);
+  background: var(--accent);
   animation: typingBounce 1.2s infinite;
+  opacity: 0.6;
 }
 .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
 .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
@@ -204,10 +207,10 @@
 }
 
 .chip {
-  background: rgba(108,99,255,0.09);
-  border: 1px solid rgba(108,99,255,0.22);
+  background: rgba(253,164,129,0.08);
+  border: 1px solid rgba(253,164,129,0.22);
   border-radius: var(--r-full);
-  color: var(--accent-light);
+  color: var(--accent);
   font-size: 11px;
   font-weight: 600;
   padding: 3px 10px;
@@ -217,9 +220,10 @@
 }
 
 .chip:hover {
-  background: rgba(108,99,255,0.18);
+  background: rgba(253,164,129,0.18);
   border-color: var(--accent);
-  color: white;
+  color: var(--text-inverse);
+  background: var(--accent);
 }
 
 /* ── Input area ───────────────────────────────────────────── */
@@ -253,7 +257,7 @@
   height: 34px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-  color: white;
+  color: var(--text-inverse);
   border: none;
   cursor: pointer;
   display: flex;
@@ -261,9 +265,10 @@
   justify-content: center;
   flex-shrink: 0;
   transition: all var(--t-fast);
+  box-shadow: 0 2px 10px rgba(253,164,129,0.3);
 }
 .chatbot-send:hover:not(:disabled) {
-  transform: scale(1.07);
-  box-shadow: 0 4px 12px rgba(108,99,255,0.4);
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(253,164,129,0.45);
 }
 .chatbot-send:disabled { opacity: 0.4; cursor: not-allowed; }

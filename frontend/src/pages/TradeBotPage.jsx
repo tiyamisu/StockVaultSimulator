@@ -12,25 +12,25 @@ import { useApp } from "../context/AppContext";
 function parseMarkdown(text) {
   return text
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.*?)\*/g, "<em style='color:var(--cyan)'>$1</em>")
+    .replace(/\*(.*?)\*/g, "<em style='color:var(--accent)'>$1</em>")
     .replace(/\n/g, "<br/>");
 }
 
 const INITIAL_MESSAGES = [
   {
     id: 1, from: "bot",
-    text: "👋 Welcome to **TradeBot AI**! I'm your personal finance assistant.\n\nI can help you:\n• 📈 **Analyze stocks** — *\"analyze NVDA\"*\n• 💡 **Get advice** — *\"should I buy AAPL?\"*\n• 💼 **Review portfolio** — *\"my portfolio\"*\n• 📊 **Market overview** — *\"market summary\"*\n• 📚 **Learn concepts** — *\"what is P/E ratio?\"*",
+    text: "Welcome to **TradeBot AI**! I'm your personal finance assistant.\n\nI can help you:\n• **Analyze stocks** — *\"analyze NVDA\"*\n• **Get advice** — *\"should I buy AAPL?\"*\n• **Review portfolio** — *\"my portfolio\"*\n• **Market overview** — *\"market summary\"*\n• **Learn concepts** — *\"what is P/E ratio?\"*",
     time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
   },
 ];
 
 const QUICK_PROMPTS = [
-  { label: "📈 Analyze AAPL",   text: "analyze AAPL"      },
-  { label: "🚀 Top Gainers",    text: "top gainers"        },
-  { label: "💼 My Portfolio",   text: "my portfolio"       },
-  { label: "📊 Market Summary", text: "market summary"     },
-  { label: "💡 Tips",           text: "investment tips"    },
-  { label: "❓ P/E Ratio",      text: "what is P/E ratio"  },
+  { label: "Analyze AAPL",   text: "analyze AAPL"     },
+  { label: "Top Gainers",    text: "top gainers"       },
+  { label: "My Portfolio",   text: "my portfolio"      },
+  { label: "Market Summary", text: "market summary"    },
+  { label: "Invest Tips",    text: "investment tips"   },
+  { label: "P/E Ratio?",     text: "what is P/E ratio" },
 ];
 
 export default function TradeBotPage() {
@@ -75,9 +75,9 @@ export default function TradeBotPage() {
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{
             width: 44, height: 44, borderRadius: "var(--r-md)",
-            background: "linear-gradient(135deg, var(--accent), var(--cyan-dark))",
+            background: "linear-gradient(135deg, var(--accent), var(--plum))",
             display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 4px 16px rgba(108,99,255,0.3)", flexShrink: 0,
+            boxShadow: "0 4px 16px rgba(253,164,129,0.3)", flexShrink: 0,
           }}>
             <Bot size={22} color="white" />
           </div>
@@ -95,12 +95,12 @@ export default function TradeBotPage() {
       <div style={{ display: "flex", gap: 7, flexWrap: "wrap", flexShrink: 0 }}>
         {QUICK_PROMPTS.map((p) => (
           <button key={p.text} onClick={() => sendMessage(p.text)} style={{
-            background: "rgba(108,99,255,0.08)", border: "1px solid rgba(108,99,255,0.2)",
-            borderRadius: "var(--r-full)", color: "var(--accent-light)", fontSize: 12, fontWeight: 600,
+            background: "rgba(253,164,129,0.08)", border: "1px solid rgba(253,164,129,0.2)",
+            borderRadius: "var(--r-full)", color: "var(--accent)", fontSize: 12, fontWeight: 600,
             padding: "5px 12px", cursor: "pointer", fontFamily: "inherit", transition: "all var(--t-fast)",
           }}
-            onMouseEnter={(e) => { e.target.style.background = "rgba(108,99,255,0.18)"; e.target.style.borderColor = "var(--accent)"; }}
-            onMouseLeave={(e) => { e.target.style.background = "rgba(108,99,255,0.08)"; e.target.style.borderColor = "rgba(108,99,255,0.2)"; }}
+            onMouseEnter={(e) => { e.target.style.background = "rgba(253,164,129,0.18)"; e.target.style.borderColor = "var(--accent)"; }}
+            onMouseLeave={(e) => { e.target.style.background = "rgba(253,164,129,0.08)"; e.target.style.borderColor = "rgba(253,164,129,0.2)"; }}
           >
             {p.label}
           </button>
@@ -123,7 +123,7 @@ export default function TradeBotPage() {
               {msg.from === "bot" && (
                 <div style={{
                   width: 30, height: 30, borderRadius: "50%",
-                  background: "linear-gradient(135deg, var(--accent), var(--cyan-dark))",
+                  background: "linear-gradient(135deg, var(--accent), var(--plum))",
                   display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                 }}>
                   <Bot size={14} color="white" />

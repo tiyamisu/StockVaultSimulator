@@ -15,7 +15,7 @@ const INITIAL_MESSAGES = [
   {
     id: 1,
     from: "bot",
-    text: "👋 Hi! I'm **TradeBot**, your AI finance assistant!\n\nTry asking me:\n• *\"analyze AAPL\"*\n• *\"my portfolio\"*\n• *\"what is P/E ratio?\"*\n• *\"market summary\"*",
+    text: "Hi! I'm **TradeBot**, your AI finance assistant!\n\nTry asking me:\n• *\"analyze AAPL\"*\n• *\"my portfolio\"*\n• *\"what is P/E ratio?\"*\n• *\"market summary\"*",
     time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
   },
 ];

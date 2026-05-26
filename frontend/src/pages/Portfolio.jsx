@@ -11,7 +11,7 @@ import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis
 } from "recharts";
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { TrendingUp, TrendingDown, Briefcase } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Portfolio() {
@@ -47,7 +47,7 @@ export default function Portfolio() {
         </div>
         <div className="glass-card">
           <div className="empty-state">
-            <div className="empty-state-icon">💼</div>
+            <div className="empty-state-icon"><Briefcase size={38} strokeWidth={1.5} color="var(--text-muted)" /></div>
             <div className="empty-state-text">Your portfolio is empty</div>
             <div className="empty-state-sub">You have {formatCurrency(walletBalance)} ready to invest</div>
             <button className="btn btn-primary" style={{ marginTop: 16 }} onClick={() => navigate("/market")}>
@@ -78,9 +78,9 @@ export default function Portfolio() {
           <div className="stat-value">{formatCurrency(totalNetWorth)}</div>
           <div className="stat-sub">Cash + Holdings</div>
         </div>
-        <div className="glass-card stat-card" style={{ borderTop: "2px solid var(--cyan)" }}>
+        <div className="glass-card stat-card" style={{ borderTop: "2px solid var(--accent)" }}>
           <div className="stat-label">Portfolio Value</div>
-          <div className="stat-value" style={{ color: "var(--cyan)" }}>{formatCurrency(metrics.totalValue)}</div>
+          <div className="stat-value" style={{ color: "var(--accent)" }}>{formatCurrency(metrics.totalValue)}</div>
           <div className="stat-sub">Market value</div>
         </div>
         <div className="glass-card stat-card" style={{ borderTop: "2px solid var(--green)" }}>
@@ -112,7 +112,7 @@ export default function Portfolio() {
                 <PieChart>
                   <Pie data={sectorData} cx="50%" cy="50%" innerRadius={40} outerRadius={68} paddingAngle={3} dataKey="value">
                     {sectorData.map((entry) => (
-                      <Cell key={entry.name} fill={SECTOR_COLORS[entry.name] || "#6c63ff"} />
+                      <Cell key={entry.name} fill={SECTOR_COLORS[entry.name] || "#FDA481"} />
                     ))}
                   </Pie>
                   <Tooltip
@@ -127,7 +127,7 @@ export default function Portfolio() {
                 const pct = ((s.value / metrics.totalValue) * 100).toFixed(1);
                 return (
                   <div key={s.name} style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    <div style={{ width: 9, height: 9, borderRadius: 2, background: SECTOR_COLORS[s.name] || "#6c63ff", flexShrink: 0 }} />
+                    <div style={{ width: 9, height: 9, borderRadius: 2, background: SECTOR_COLORS[s.name] || "#FDA481", flexShrink: 0 }} />
                     <span style={{ fontSize: 12, color: "var(--text-secondary)", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.name}</span>
                     <span style={{ fontSize: 12, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", flexShrink: 0 }}>{pct}%</span>
                   </div>

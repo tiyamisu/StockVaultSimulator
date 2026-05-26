@@ -41,7 +41,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       {/* ── Brand ─────────────────────────────────────────── */}
       <div className="sidebar-brand">
-        <div className="sidebar-logo">📈</div>
+        <div className="sidebar-logo"><TrendingUp size={20} color="var(--text-inverse)" /></div>
         <div className="sidebar-brand-text">
           <span className="sidebar-brand-name">StockVault</span>
           <span className="sidebar-brand-tag">Pro Simulator</span>

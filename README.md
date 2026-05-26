@@ -1,240 +1,391 @@
+# StockVault Simulator
+
 <div align="center">
-  <a href="https://unsplash.com/photos/K5mPtONmpHM?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink">
-    <kbd> <img src="https://user-images.githubusercontent.com/105665813/195911442-19d6aa60-6fb5-4bdb-b380-39299162bb47.jpg" width="450" height="300"> </kbd>
-  </a>
 
-  <h3 align="center">Stock-Market-Simulator</h3>
+![Java](https://img.shields.io/badge/Java-25-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-3.9-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![H2](https://img.shields.io/badge/H2_Database-In--Memory-003545?style=for-the-badge&logo=h2&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
-  <a href="https://github.com/Jackson-Wozniak/Stock-Market-Simulation/edit/main/Backend"><strong>Explore The Code»</strong></a>
-    </br>
-    <p>
-      <img src="https://img.shields.io/github/commit-activity/m/Jackson-Wozniak/Stock-Market-Simulation" alt="license" />
-      <img src="https://img.shields.io/github/issues/Jackson-Wozniak/Stock-Market-Simulation" alt="license" />
-      <img src="https://img.shields.io/github/license/Jackson-Wozniak/Stock-Market-Simulation" alt="license" />
-      <img src="https://img.shields.io/github/languages/count/Jackson-Wozniak/Stock-Market-Simulation?color=brightgreen" alt="license" />
-    </p> 
-    <a href="https://github.com/Jackson-Wozniak">Github</a>
-    ·
-    <a href="https://github.com/Jackson-Wozniak/Stock-Market-Simulation/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/Jackson-Wozniak/Stock-Market-Simulation/issues">Request Feature</a>
+**A full-stack virtual stock trading platform built as a Java laboratory project.**  
+Backend powered entirely by Java 25 + Spring Boot. Frontend in React + Vite.
+
+[Run Locally](#-local-deployment) · [Architecture](#-java-backend-architecture) · [API Docs](#-rest-api-reference) · [Report Bug](../../issues)
+
 </div>
 
-## :books: Table of Contents
+---
 
-<ol>
-    <li><a href="#overview">Market Engine Overview</a></li>
-    <li><a href="#pricing-model">Pricing Model Details</a></li>
-    <li><a href="#results">Statistical Analysis & Results</a></li>
-    <li><a href="#performance-optimization">Optimizing For Performance</a></li>
-    <li><a href="#local-dev">Local Deployment</a></li>
-</ol>    
+## 📚 Table of Contents
 
-<br/> 
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
+1. [Project Overview](#-project-overview)
+2. [Java Backend Architecture](#-java-backend-architecture)
+3. [Spring Boot Services](#-spring-boot-services)
+4. [Market Engine & Pricing Model](#-market-engine--pricing-model)
+5. [REST API Reference](#-rest-api-reference)
+6. [Database Layer (JPA + H2/MySQL)](#-database-layer-jpa--h2mysql)
+7. [Performance Optimizations](#-performance-optimizations)
+8. [Local Deployment](#-local-deployment)
+9. [Tech Stack](#-tech-stack)
 
-## :notebook: Market Engine Overview <a id="overview"></a>
+---
 
-#### [Detailed documentation for the server can be found here](https://github.com/Jackson-Wozniak/Stock-Market-Simulation/tree/main/stock-market-service/README.md)
+## 🧪 Project Overview
 
-### Market Calendar Tracking
+**StockVault Simulator** is a **Java lab project** developed to demonstrate enterprise-grade backend engineering with the Spring ecosystem. It simulates a live stock market environment — complete with real-time price ticks, portfolio management, AI-assisted trading advice, and transaction history — with a Java 25 backend driving all business logic.
 
-The Market Engine is the core of this stock market, handling the execution of all features in the market. To accurately track
-time passage, the engine uses a universal 'Market State' that is handled by an internal service class, handling time and date changes
-on each 'market tick.' A market tick is one run of the market, where the default tick is run every 1 second. Each tick, the market
-time is incremented by 5 minutes. However, during after hours this is then upped to 30 minutes per tick, ensuring that the downtime between
-trading days is accounted for, yet minimized. For the rest of this README, you can assume that when I reference time, it is the
-internal Market Timing, as opposed to real-world time.
+This project was built as part of a **Java programming laboratory** to explore:
 
-The market opens at 9am, and runs trading until closing at 5pm. On each market tick, the pricing model runs one change for each stock in the market,
-and also saves an 'Intra Day Pricing Record' to be able to populate pricing charts. After each End-Of-Day, the closing prices are saved as a price record to be able to showcase market movement over long-term simulations. End-Of-Month and End-Of-Year milestones are also tracked, where the market trajectory is altered based on the movement over the course of the month. This trajectory than has a slight affect on the pricing model, simulating 'Bull' and 'Bear' markets that occur in the real world. Alongside this, both intra-day and end-of-day pricing records are archived at the end of
-the month and year, where they are moved out of the database and into a long-term CSV file. This can be read in more detail in the 
-<a href="#performance-optimization">Optimizing For Performance</a> section.
+- **Spring Boot** application structure and dependency injection
+- **JPA/Hibernate** ORM with both in-memory (H2) and persistent (MySQL) databases
+- **RESTful API design** with Spring MVC
+- **Concurrency** via scheduled tasks for real-time market ticks
+- **Spring Security** for session-based authentication
+- **Maven** multi-module project structure
 
-### News Stories
+---
 
-Alongside these pricing-related operations, the market executor also handles News and Earnings reports. Earnings run once at the end of
-each fiscal quarter, and have a slight affect on the pricing model of each stock. The News executor plays a vital role in the sentiment of stocks,
-releasing a range of newsRelease stories for stocks across the market, each of which having a realistic affect on the short-term sentiment of the stock.
-These short-term factors regress toward zero over time, simulating the fact that newsRelease stories impact decays over time.
+## ☕ Java Backend Architecture
 
-### Custom Simulations
-
-To enable real-time testing, this application provides a multitude of customizable simulations through the MarketSimulationController. These
-simulations are contained in-memory and have no effect on the database of stocks. This allows for extensive testing of different market features,
-and is especially useful for testing the pricing model and seeing how different factors involved in price changes alter the direction of a stock.
-
-### Index Funds
-
-Index funds currently operate very simply, by returning the average price of all stocks under the umbrella of that index fund. This can be traded
-just like any other stock in the Trading Service, so they act much like an Exchange Traded Fund (ETF). There are a broad range of options for index
-funds, and the total market index fund is used as a basis for gauging the market sentiment.
-
-<br/> 
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
-
-
-## :chart_with_upwards_trend: Pricing Model <a id="pricing-model"></a>
-
-### Company Attributes
-
-To ensure a realistic simulation, each company is assigned a default attribute for each of the company attributes in the simulation. These
-are investment style (growth, value, etc.), investor rating (buy, sell, hold, etc.), sector and market cap. These attributes are not changed
-throughout the simulation's running, and are instead used as a basis for the expected direction a stock will move in, before random noise and
-environment variables (such as newsRelease stories) are taken into account.
-
-### Pricing Attributes and Factors
-
-All 5 factors are tracked using a range of values from [-50, 50]. The closer to the edges of these values, the higher the change that the
-stock trends in that direction, with the price changes scaling up as the factors reach closer to 50. A stock with factor values of 0
-can be expected to trend nearly stable, relying primarily on randomized noise for their long-term movements.
-
-Alongside this, each factor is also assigned a weight, where the total weight of all 5 stocks adds up to 1.0. This weight provides
-more accuracy, scaling the importance of each factor based on the companies attributes and which is most important at a point in time.
-
-
-### 1. Pricing Volatility
-
-The pricing volatility is represented as ENUM value, with values of [Stable, Low, Normal, High, Extreme]. The volatility of a stock
-is determined at the beginning of the simulation, and is given as one of the attributes of the company in the CSV file. This pricing volatility
-affects the scale of random noise, with volatile stocks seeing more random noise during trading. This volatility has no direct influence
-on the direction of the stock, as this solely seeks to amplify the movement a stock may see based on its other attributes. Each of the 5
-main factors are also assigned a 'base noise' value that is added onto the volatility value, used to place a floor on how much random noise a stock
-has (to ensure that stocks do not remain deterministic no matter how stable their attributes may be).
-
-### 2. Investor Confidence
-
-Representing the long-term confidence and health of a company, investor confidence seeks to track the long-term sentiment of the company, relying
-primarily on the financial health and stability of a companies profile. Companies with consistent positive newsRelease will see an uptake in their
-investor confidence, and likewise the basis of the default investor confidence is primarily based on a companies Investment Style and Investor Rating, which are both provided in the CSV file as company attributes. Direct financial data is not simulated in this application, so the
-movement of a stocks investor confidence is largely based on the rating assigned to a company at the start, and the style of investment it is.
-
-### 3. Trading Demand
-
-Trading demand encapsulates the short-term demand for a stock, representing both speculative demand and the buying frequency a stock sees. This
-is derived from the companies base attributes, but is primarily altered based on recent price movement as well as newsRelease sentiment. Some influence
-will be given to the performance of related companies and stocks, but this has not yet been introduced into the model.
-
-*This stock accounts for factor regression outlined in the News Sentiment section*
-
-### 4. Liquidity
-
-This factor tracks how easy it is to trade a stock, partnering closely with trading demand to simulate the fact that a very popular stock will
-see reliable upward price movement as more people look to buy in, and less shares become available. This is initially derived from the companies
-attributes, with a heavy emphasis on market cap, as you could expect the share availability for a large company is more consistent than their smaller
-counterparts. Alongside this, as a companies trading demand moves, a strong correlation can be seen with the movement of a stocks liquidity factor.
-
-*This stock accounts for factor regression outlined in the News Sentiment section*
-
-### 5. News Sentiment
-
-News sentiment begins at 0 for all stocks, and only changes based on the release of newsRelease stories. Some newsRelease stories will affect multiple stocks,
-for example legislation may put pressure on all technology stocks. To accurately account for a newsRelease stories timeline, the influence of newsRelease
-will regress over time, also regressing other short-term factors. This regression tends toward 0, so that newsRelease stories are rolled out of
-relevance as time passes.
-
-*This stock accounts for factor regression outlined in the News Sentiment section*
-
-### 6. Innovation Potential
-
-Innovation potential seeks to track the confidence investors have on how much growth potential a company has. Stocks in growth sectors will see a
-higher baseline innovation factor, as you can assume a Technology company would provide more innovation than a similarly rated company in a sector
-such as traditional energy.
-
-### Pricing Formula
-
-```diff
-New Price = currentPrice
-          +  newsFactorDelta
-          + investorConfidenceDelta
-          + innovationDelta
-          + tradingDemandDelta
-          + liquidityDelta
-```
-
-All factor delta's are determined by the following formula:
-
-```diff
-Factor Delta = ((((Scaled Signal * .06) +  Random Noise) 
-             * CurrentPrice)
-             * (1 / (1 + (currentPrice / 10,000)^1.5)))   <-- Growth dampender to ensure prices over 10,000 dont grow exponentially
-             / PRICE_SCALE_DIMINISHER   <-- Usually 800.0, ensures price delta scales based on market tick rate
-```
-
-```diff
-ScaledSignal = tanh((factorValue * factorWeight) / 35.0)  <-- value between +-1
-
-FactorNoise = volatility + baseFactorNoise
-
-Sigma = max(.05, (FactorNoise * 1 - (.7 * | ScaledSignal |)))   <-- Ensures floor of noise, scaling up as signal is closer to +-50
-
-RandomNoise = random([-1.0, 1.0]) * Sigma 
-```
-
-<br/> 
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
-
-
-## :bar_chart: Statistical Analysis & Results <a id="results"></a>
-
-### Accurately modelling a stock market
-
-### Results
-
-<br/> 
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
-
-
-## :clock1: Optimizing For Performance <a id="performance-optimization"></a>
-
-### Stock Caching
-
-Stocks are cached using a ConcurrentHashMap implementation. All interactions with the Stock DB table is done through the StockService,
-which stores an internal stock cache that is referenced. This is especially useful for price changes, to enable a scalable implementation that
-remains fast even as the market tick rate is shortened and performance becomes paramount.
-
-To see the results of the addition of the stock cache, I will use the performance logger to track how long it took the market to execute one tick:
-
-Without the stock cache, values of ~7sec to ~8sec where most common, meaning that executing a single price change for all stocks took 8 seconds.
-In this case, my tick rate was set at a one second delay, but the tick rate was 9 seconds in practice. This limited the ability to accurately
-change stock prices over the course of the day, but the true bottleneck was that the number of stocks was limited in the database to ensure
-executions did not take too long.
-
-Once the stock cache was introduced, the average performance of one execution hovered around ~80ms. Prices were saved to the database every 10
-ticks, meaning that every 10 ticks took ~5sec. This however could be minimized by reducing the frequency of cache validation, as we do not have
-any reason to save every 10 ticks when all read/write operations on stocks are done through the cache. Likewise, saving of the cache to the DB
-could also be done concurrently, reducing the downtime of the market execution thread and increasing the reliability of the true tick rate.
-
-### Pricing Record Archives
-
-To avoid an exponentially growing amount of data in the database, price records are archived on a rolling basis, where old
-price records are archived at the same time new ones are put in the database. At the end of the month, intra-day price records
-from two months ago are deleted from the database and inserted into the CSV archive file for long term storage. At the end of the year, 
-end-of-day price records from two years ago are deleted and stored in long term storage. This ensures that recent price records are available,
-but retrieving old prices is read from the archives instead, keeping DB data clean and relevant.
-
-<br/> 
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
-
-## :pencil2: Local Deployment <a id="local-dev"></a>
-
-To run locally, first ensure that Docker Desktop & Maven is downloaded to your system. Then run the following commands:
-
-*NOTE* API Docs can be found after running by visiting http://localhost:8000/swagger-ui/index.html
-
-- Stock Market Service will run on http://localhost:8000
+The backend is a **Java 25 Spring Boot monolith** structured as a Maven project. Every piece of business logic — from price calculations to portfolio management — is written in Java.
 
 ```
-  - git clone https://github.com/Jackson-Wozniak/Stock-Market-Simulation.git
-  - docker-compose up
-  
-  To update docker-compose after changes to code, run:
-  - docker-compose up --build
-  
-  To remove created containers after you are done, run:
-  - docker-compose down
+stock-market-service/
+├── src/main/java/
+│   └── com/stockvault/
+│       ├── StockVaultApplication.java       ← @SpringBootApplication entry point
+│       ├── config/
+│       │   ├── SecurityConfig.java          ← Spring Security configuration
+│       │   └── WebConfig.java               ← CORS, MVC settings
+│       ├── controller/
+│       │   ├── StockController.java         ← GET /api/stocks/**
+│       │   ├── PortfolioController.java     ← POST /api/portfolio/**
+│       │   ├── TransactionController.java   ← GET /api/transactions
+│       │   └── AuthController.java          ← POST /api/auth/**
+│       ├── service/
+│       │   ├── StockService.java            ← Core market logic (Java)
+│       │   ├── PortfolioService.java        ← P&L calculations in Java
+│       │   ├── PricingEngine.java           ← Scheduled price updates
+│       │   └── AuthService.java             ← Login / session management
+│       ├── model/
+│       │   ├── Stock.java                   ← @Entity — JPA mapped stock
+│       │   ├── Portfolio.java               ← @Entity — user holdings
+│       │   ├── Transaction.java             ← @Entity — trade records
+│       │   └── User.java                    ← @Entity — authenticated user
+│       ├── repository/
+│       │   ├── StockRepository.java         ← extends JpaRepository<Stock, Long>
+│       │   ├── PortfolioRepository.java
+│       │   └── TransactionRepository.java
+│       └── dto/
+│           ├── TradeRequest.java            ← Request DTO (buy/sell)
+│           └── StockResponse.java           ← Response DTO
+└── src/main/resources/
+    ├── application.properties               ← Default (MySQL / Docker)
+    ├── application-local.properties         ← H2 in-memory (local dev)
+    └── data.sql                             ← Seed data for H2
 ```
 
-<br/>
-<!-- ------------------------------------------------------------------------------------------------------------------------------------------->
+### Key Java Design Patterns Used
 
+| Pattern | Where Applied |
+|---|---|
+| **Dependency Injection** | All `@Service` / `@Repository` beans via `@Autowired` |
+| **Repository Pattern** | `JpaRepository` extensions for each entity |
+| **DTO Pattern** | Separate request/response objects to decouple API from DB layer |
+| **Scheduled Tasks** | `@Scheduled` in `PricingEngine.java` for market ticks |
+| **Builder Pattern** | Lombok `@Builder` on entity classes |
+| **Strategy Pattern** | Interchangeable pricing factor strategies |
+
+---
+
+## 🌱 Spring Boot Services
+
+### StockService.java
+The core Java service. Maintains an in-memory `ConcurrentHashMap<String, Stock>` cache for O(1) price lookups. Interacts with `StockRepository` (JPA) for persistence.
+
+```java
+@Service
+@RequiredArgsConstructor
+public class StockService {
+
+    private final StockRepository stockRepository;
+    private final ConcurrentHashMap<String, Stock> stockCache = new ConcurrentHashMap<>();
+
+    public List<Stock> getAllStocks() {
+        return new ArrayList<>(stockCache.values());
+    }
+
+    public Stock getStock(String ticker) {
+        return stockCache.getOrDefault(ticker,
+            stockRepository.findByTicker(ticker)
+                .orElseThrow(() -> new StockNotFoundException(ticker)));
+    }
+
+    public void updatePrice(String ticker, double newPrice) {
+        stockCache.computeIfPresent(ticker, (k, stock) -> {
+            stock.setPrice(newPrice);
+            return stock;
+        });
+    }
+}
+```
+
+### PricingEngine.java
+Runs on a `@Scheduled` fixed-rate task. Every tick, it iterates all stocks, applies the **6-factor pricing formula** (see below), and pushes updates via SSE or WebSocket.
+
+```java
+@Component
+@RequiredArgsConstructor
+public class PricingEngine {
+
+    private final StockService stockService;
+    private final NewsService newsService;
+
+    @Scheduled(fixedRate = 3000) // 3-second market tick
+    public void tick() {
+        stockService.getAllStocks().forEach(stock -> {
+            double delta = calculateDelta(stock);
+            double newPrice = Math.max(0.01, stock.getPrice() + delta);
+            stockService.updatePrice(stock.getTicker(), newPrice);
+        });
+    }
+
+    private double calculateDelta(Stock stock) {
+        // 6-factor model — all Java arithmetic
+        double signal   = Math.tanh((stock.getFactorValue() * stock.getFactorWeight()) / 35.0);
+        double noise    = stock.getVolatilityFactor() + stock.getBaseNoise();
+        double sigma    = Math.max(0.05, noise * (1 - 0.7 * Math.abs(signal)));
+        double randNoise = (Math.random() * 2 - 1) * sigma;
+        double dampener = 1.0 / (1 + Math.pow(stock.getPrice() / 10_000.0, 1.5));
+        return ((signal * 0.06 + randNoise) * stock.getPrice() * dampener) / 800.0;
+    }
+}
+```
+
+---
+
+## 📈 Market Engine & Pricing Model
+
+The market engine runs entirely in Java and uses a **6-factor stochastic pricing model**:
+
+| Factor | Description | Java Field |
+|---|---|---|
+| **Investor Confidence** | Long-term company health sentiment | `investorConfidence` (double) |
+| **Trading Demand** | Short-term buy/sell pressure | `tradingDemand` (double) |
+| **Liquidity** | Availability of shares for trading | `liquidity` (double) |
+| **News Sentiment** | Decaying influence of news events | `newsSentiment` (double) |
+| **Innovation Potential** | Growth sector confidence | `innovationPotential` (double) |
+| **Volatility Noise** | Randomized price fluctuation | `volatility` (enum: STABLE→EXTREME) |
+
+### Pricing Formula (Java Implementation)
+
+```java
+// Pricing delta for one market tick — computed per stock in Java
+double newPrice = currentPrice
+    + investorConfidenceDelta(stock)
+    + tradingDemandDelta(stock)
+    + liquidityDelta(stock)
+    + newsSentimentDelta(stock)
+    + innovationDelta(stock);
+
+// Factor delta formula
+double factorDelta(double factorValue, double weight, double price, double volatility) {
+    double scaledSignal = Math.tanh((factorValue * weight) / 35.0); // ∈ (-1, 1)
+    double sigma = Math.max(0.05, volatility * (1 - 0.7 * Math.abs(scaledSignal)));
+    double noise = (Math.random() * 2 - 1) * sigma;
+    double dampener = 1.0 / (1 + Math.pow(price / 10_000.0, 1.5));
+    return ((scaledSignal * 0.06 + noise) * price * dampener) / 800.0;
+}
+```
+
+---
+
+## 🔗 REST API Reference
+
+All endpoints are served by **Spring MVC controllers** on `http://localhost:8000`.
+
+| Method | Endpoint | Controller | Description |
+|---|---|---|---|
+| `GET` | `/api/stocks` | `StockController` | List all stocks with live prices |
+| `GET` | `/api/stocks/{ticker}` | `StockController` | Single stock details |
+| `POST` | `/api/portfolio/buy` | `PortfolioController` | Execute a BUY trade |
+| `POST` | `/api/portfolio/sell` | `PortfolioController` | Execute a SELL trade |
+| `GET` | `/api/portfolio` | `PortfolioController` | Get user's holdings |
+| `GET` | `/api/transactions` | `TransactionController` | Full trade history |
+| `POST` | `/api/auth/login` | `AuthController` | Login (session-based) |
+| `POST` | `/api/auth/logout` | `AuthController` | Invalidate session |
+| `GET` | `/api/market/indices` | `MarketController` | Index fund snapshots |
+
+> Full Swagger/OpenAPI docs: `http://localhost:8000/swagger-ui/index.html`
+
+---
+
+## 🗄 Database Layer (JPA + H2/MySQL)
+
+The project supports **two database profiles**:
+
+### Local Development — H2 In-Memory (default for lab use)
+```properties
+# application-local.properties
+spring.datasource.url=jdbc:h2:mem:stockvault;DB_CLOSE_DELAY=-1
+spring.datasource.driver-class-name=org.h2.Driver
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+```
+
+Run with: `mvn spring-boot:run -Dspring-boot.run.profiles=local`
+
+### Production — MySQL via Docker
+```properties
+# application-docker.properties
+spring.datasource.url=jdbc:mysql://mysql:3306/stockvault
+spring.datasource.username=root
+spring.datasource.password=password
+spring.jpa.hibernate.ddl-auto=update
+```
+
+### JPA Entity Example (Java)
+
+```java
+@Entity
+@Table(name = "stocks")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Stock {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true, nullable = false, length = 10)
+    private String ticker;
+
+    @Column(nullable = false)
+    private String companyName;
+
+    @Column(nullable = false)
+    private double price;
+
+    @Enumerated(EnumType.STRING)
+    private Volatility volatility;  // STABLE, LOW, NORMAL, HIGH, EXTREME
+
+    @Column(nullable = false)
+    private String sector;
+
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
+}
+```
+
+---
+
+## ⚡ Performance Optimizations
+
+### ConcurrentHashMap Stock Cache
+All stock reads bypass the database and hit the Java in-memory cache:
+
+```java
+// O(1) lookup — no DB round-trip for price reads
+private final ConcurrentHashMap<String, Stock> stockCache = new ConcurrentHashMap<>();
+```
+Before caching: **~7–8 sec/tick**. After: **~80 ms/tick**.
+
+### Async Price Broadcasting
+Spring's `@Async` enables non-blocking price push to connected clients, keeping the pricing engine thread free.
+
+### Pricing Record Archival
+End-of-day and intra-day records are archived to CSV on a rolling monthly basis using a Java `@Scheduled` job, preventing unbounded DB growth.
+
+---
+
+## 🚀 Local Deployment
+
+### Prerequisites
+| Requirement | Version |
+|---|---|
+| **JDK** | 25 (OpenJDK recommended) |
+| **Maven** | 3.9+ |
+| **Node.js** | 18+ (for React frontend) |
+| **Docker Desktop** | Optional (for MySQL profile) |
+
+### Quick Start (H2 — No Docker needed)
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/tiyamisu/StockVaultSimulator.git
+cd StockVaultSimulator
+
+# 2. Run the Java backend (H2 in-memory DB)
+cd stock-market-service
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+# Backend available at http://localhost:8000
+# H2 Console at http://localhost:8000/h2-console
+
+# 3. Run the React frontend (new terminal)
+cd ../frontend
+npm install
+npm run dev
+# Frontend available at http://localhost:5173
+```
+
+**Demo credentials:** `demo` / `demo123`
+
+### Full Stack with Docker (MySQL)
+
+```bash
+# Requires Docker Desktop
+docker-compose up --build
+
+# To stop
+docker-compose down
+```
+
+### Maven Commands
+
+```bash
+# Build the Java project
+mvn clean package
+
+# Run tests
+mvn test
+
+# Skip tests and build JAR
+mvn clean package -DskipTests
+
+# Run with specific profile
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology | Language |
+|---|---|---|
+| **Backend Runtime** | Java 25 (OpenJDK) | ☕ Java |
+| **Web Framework** | Spring Boot 3.x | ☕ Java |
+| **ORM** | Spring Data JPA / Hibernate | ☕ Java |
+| **Build Tool** | Apache Maven 3.9 | XML / ☕ Java |
+| **Security** | Spring Security | ☕ Java |
+| **Dev Database** | H2 In-Memory | SQL |
+| **Prod Database** | MySQL 8 (Docker) | SQL |
+| **API Docs** | SpringDoc OpenAPI / Swagger | ☕ Java |
+| **Frontend** | React 18 + Vite | JavaScript |
+| **Styling** | Vanilla CSS (Digital Atelier theme) | CSS |
+| **Containerization** | Docker + Docker Compose | YAML |
+
+---
+
+<div align="center">
+
+**StockVault Simulator** · Java Lab Project · MIT License
+
+Built with ☕ Java 25 + Spring Boot
+
+</div>

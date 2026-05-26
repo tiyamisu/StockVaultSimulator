@@ -84,7 +84,7 @@ export default function Watchlist() {
       {watchedStocks.length === 0 ? (
         <div className="glass-card">
           <div className="empty-state">
-            <div className="empty-state-icon">⭐</div>
+            <div className="empty-state-icon"><Star size={38} strokeWidth={1.5} color="var(--text-muted)" /></div>
             <div className="empty-state-text">Your watchlist is empty</div>
             <div className="empty-state-sub">Click the ★ icon on the Market page to add stocks</div>
             <button className="btn btn-primary" style={{ marginTop: 16 }} onClick={() => navigate("/market")}>
@@ -120,8 +120,8 @@ export default function Watchlist() {
                     <AreaChart data={stock.history.slice(-20)} margin={{ top: 2, right: 0, left: 0, bottom: 0 }}>
                       <defs>
                         <linearGradient id={`wl-${stock.ticker}`} x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor={isUp ? "#00ff88" : "#ff4757"} stopOpacity={0.28} />
-                          <stop offset="100%" stopColor={isUp ? "#00ff88" : "#ff4757"} stopOpacity={0.01} />
+                          <stop offset="0%" stopColor={isUp ? "#2dd4a0" : "#B4182D"} stopOpacity={0.28} />
+                          <stop offset="100%" stopColor={isUp ? "#2dd4a0" : "#B4182D"} stopOpacity={0.01} />
                         </linearGradient>
                       </defs>
                       <Area type="monotone" dataKey="price" stroke={isUp ? "var(--green)" : "var(--red)"} strokeWidth={1.5} fill={`url(#wl-${stock.ticker})`} dot={false} />

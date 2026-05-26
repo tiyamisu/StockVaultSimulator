@@ -375,11 +375,11 @@ export const NEWS_HEADLINES = [
   { id: 8, headline: "Pfizer faces patent cliff as Paxlovid sales decline",             time: "1d ago",  sentiment: "negative", ticker: "PFE"  },
 ];
 
-// ── Sector colors ────────────────────────────────────────────
+// ── Sector colors — aligned with Midnight Navy palette ────────
 export const SECTOR_COLORS = {
-  Technology:  "#6c63ff",
-  Finance:     "#00d4ff",
-  Energy:      "#ffd700",
-  Healthcare:  "#00ff88",
-  Consumer:    "#ff6b9d",
+  Technology:  "#FDA481",   // Sunset Peach
+  Finance:     "#ffb99a",   // Lighter Peach
+  Energy:      "#f5c842",   // Warm Gold
+  Healthcare:  "#2dd4a0",   // Teal Green
+  Consumer:    "#d4a0fd",   // Soft Lavender
 };

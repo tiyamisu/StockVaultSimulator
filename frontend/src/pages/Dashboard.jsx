@@ -9,7 +9,7 @@ import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell
 } from "recharts";
-import { TrendingUp, TrendingDown, DollarSign, Briefcase, Activity, Newspaper } from "lucide-react";
+import { TrendingUp, TrendingDown, DollarSign, Briefcase, Activity, Newspaper, PieChart as PieIcon } from "lucide-react";
 
 // Custom chart tooltip
 function ChartTooltip({ active, payload, label }) {
@@ -76,7 +76,7 @@ export default function Dashboard() {
         </div>
         <div style={{
           display: "flex", alignItems: "center", gap: 7,
-          background: "var(--green-bg)", border: "1px solid rgba(0,255,136,0.2)",
+          background: "var(--green-bg)", border: "1px solid rgba(45,212,160,0.2)",
           borderRadius: "var(--r-full)", padding: "5px 14px", flexShrink: 0,
         }}>
           <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--green)", display: "inline-block", animation: "pulse-dot 2s infinite" }} />
@@ -93,7 +93,12 @@ export default function Dashboard() {
               {idx.value.toLocaleString()}
             </div>
             <div className="stat-sub" style={{ color: idx.change >= 0 ? "var(--green)" : "var(--red)", fontWeight: 600 }}>
-              {idx.change >= 0 ? "▲ +" : "▼ "}{idx.change.toFixed(2)}%
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 3, color: idx.change >= 0 ? "var(--green)" : "var(--red)", fontWeight: 600 }}>
+                {idx.change >= 0
+                  ? <TrendingUp size={11} />
+                  : <TrendingDown size={11} />}
+                {idx.change >= 0 ? "+" : ""}{idx.change.toFixed(2)}%
+              </span>
             </div>
           </div>
         ))}
@@ -110,12 +115,12 @@ export default function Dashboard() {
           <div className="stat-sub">Cash + Portfolio</div>
         </div>
 
-        <div className="glass-card stat-card" style={{ borderTop: "2px solid var(--cyan)" }}>
+        <div className="glass-card stat-card" style={{ borderTop: "2px solid var(--accent)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
-            <Briefcase size={14} color="var(--cyan)" />
+            <Briefcase size={14} color="var(--accent)" />
             <span className="stat-label" style={{ marginBottom: 0 }}>Portfolio</span>
           </div>
-          <div className="stat-value" style={{ color: "var(--cyan)" }}>{formatCurrency(metrics.totalValue)}</div>
+          <div className="stat-value" style={{ color: "var(--accent)" }}>{formatCurrency(metrics.totalValue)}</div>
           <div className="stat-sub">{portfolio.length} positions</div>
         </div>
 
@@ -163,8 +168,8 @@ export default function Dashboard() {
               <AreaChart data={chartData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="portfolioGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#6c63ff" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#6c63ff" stopOpacity={0.02} />
+                    <stop offset="0%" stopColor="#FDA481" stopOpacity={0.4} />
+                    <stop offset="100%" stopColor="#FDA481" stopOpacity={0.02} />
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="date" tick={{ fill: "var(--text-muted)", fontSize: 10 }} axisLine={false} tickLine={false} interval={2} />
@@ -188,7 +193,7 @@ export default function Dashboard() {
                   <PieChart>
                     <Pie data={allocationData} cx="50%" cy="50%" innerRadius={38} outerRadius={62} paddingAngle={4} dataKey="value">
                       {allocationData.map((entry) => (
-                        <Cell key={entry.name} fill={SECTOR_COLORS[entry.name] || "#6c63ff"} />
+                        <Cell key={entry.name} fill={SECTOR_COLORS[entry.name] || "#FDA481"} />
                       ))}
                     </Pie>
                     <Tooltip
@@ -203,7 +208,7 @@ export default function Dashboard() {
                   const pct = metrics.totalValue > 0 ? ((entry.value / metrics.totalValue) * 100).toFixed(1) : "0.0";
                   return (
                     <div key={entry.name} style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                      <div style={{ width: 9, height: 9, borderRadius: 2, background: SECTOR_COLORS[entry.name] || "#6c63ff", flexShrink: 0 }} />
+                      <div style={{ width: 9, height: 9, borderRadius: 2, background: SECTOR_COLORS[entry.name] || "#FDA481", flexShrink: 0 }} />
                       <span style={{ fontSize: 11.5, color: "var(--text-secondary)", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{entry.name}</span>
                       <span style={{ fontSize: 11.5, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace" }}>{pct}%</span>
                     </div>
@@ -213,7 +218,7 @@ export default function Dashboard() {
             </>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "24px 0", color: "var(--text-muted)", textAlign: "center" }}>
-              <span style={{ fontSize: 30 }}>🥧</span>
+              <PieIcon size={34} color="var(--text-muted)" strokeWidth={1.2} />
               <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>No holdings yet</span>
               <span style={{ fontSize: 12 }}>Buy stocks to see allocation</span>
             </div>
@@ -240,7 +245,9 @@ export default function Dashboard() {
               </div>
               <div style={{ textAlign: "right", flexShrink: 0 }}>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 13 }}>${stock.price.toFixed(2)}</div>
-                <div style={{ color: "var(--green)", fontSize: 12, fontWeight: 600 }}>▲ +{stock.changePercent.toFixed(2)}%</div>
+                <div style={{ color: "var(--green)", fontSize: 12, fontWeight: 600, display: "flex", alignItems: "center", gap: 3 }}>
+                  <TrendingUp size={11} /> +{stock.changePercent.toFixed(2)}%
+                </div>
               </div>
             </div>
           ))}
@@ -263,7 +270,9 @@ export default function Dashboard() {
               </div>
               <div style={{ textAlign: "right", flexShrink: 0 }}>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: 13 }}>${stock.price.toFixed(2)}</div>
-                <div style={{ color: "var(--red)", fontSize: 12, fontWeight: 600 }}>▼ {stock.changePercent.toFixed(2)}%</div>
+                <div style={{ color: "var(--red)", fontSize: 12, fontWeight: 600, display: "flex", alignItems: "center", gap: 3 }}>
+                  <TrendingDown size={11} /> {stock.changePercent.toFixed(2)}%
+                </div>
               </div>
             </div>
           ))}
@@ -273,7 +282,7 @@ export default function Dashboard() {
       {/* ── Row 5: News Feed ───────────────────────────────── */}
       <div className="glass-card" style={{ overflow: "hidden" }}>
         <div style={{ padding: "16px 16px 10px", display: "flex", alignItems: "center", gap: 7 }}>
-          <Newspaper size={15} color="var(--cyan)" />
+          <Newspaper size={15} color="var(--accent)" />
           <span className="section-title">Market News</span>
         </div>
         {NEWS_HEADLINES.map((news) => (
@@ -290,7 +299,7 @@ export default function Dashboard() {
               <div style={{ fontSize: 13, fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{news.headline}</div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-              <span style={{ background: "var(--bg-glass-hover)", border: "1px solid var(--border)", borderRadius: "var(--r-full)", padding: "1px 9px", fontSize: 10.5, fontWeight: 700, color: "var(--accent-light)" }}>{news.ticker}</span>
+              <span style={{ background: "rgba(253,164,129,0.1)", border: "1px solid rgba(253,164,129,0.25)", borderRadius: "var(--r-full)", padding: "1px 9px", fontSize: 10.5, fontWeight: 700, color: "var(--accent)" }}>{news.ticker}</span>
               <span style={{ fontSize: 11.5, color: "var(--text-muted)", minWidth: 44, textAlign: "right" }}>{news.time}</span>
             </div>
           </div>

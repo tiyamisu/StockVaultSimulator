@@ -1,67 +1,82 @@
 /* ============================================================
-   index.css — StockVault Design System (Fixed Layout)
-   Dark mode trading dashboard with glassmorphism
+   index.css — StockVault Design System
+   Palette: Midnight Navy + Sunset Peach + Crimson Red
    ============================================================ */
 
 /* ── Google Fonts ─────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
 
 /* ── CSS Custom Properties (Design Tokens) ────────────────── */
 :root {
-  --bg-base:        #070b14;
-  --bg-surface:     #0d1526;
-  --bg-elevated:    #121929;
-  --bg-card:        rgba(18, 25, 41, 0.85);
-  --bg-card-hover:  rgba(24, 33, 54, 0.95);
+  /* ── Palette ── */
+  --bg-base:        #181A2F;   /* Midnight Navy  — main background   */
+  --bg-surface:     #242E49;   /* Deep Slate     — cards / surfaces   */
+  --bg-elevated:    #1E2740;   /* Between base & surface              */
+  --bg-card:        rgba(36, 46, 73, 0.9);
+  --bg-card-hover:  rgba(55, 65, 92, 0.7);
   --bg-glass:       rgba(255, 255, 255, 0.03);
-  --bg-glass-hover: rgba(255, 255, 255, 0.06);
+  --bg-glass-hover: rgba(253, 164, 129, 0.06);
 
-  --border:         rgba(255, 255, 255, 0.07);
-  --border-active:  rgba(108, 99, 255, 0.5);
-  --border-glow:    rgba(0, 212, 255, 0.3);
+  --ui-border:      #37415C;   /* Muted Blue-Gray — borders           */
+  --border:         rgba(55, 65, 92, 0.8);
+  --border-active:  rgba(253, 164, 129, 0.45);
+  --border-glow:    rgba(253, 164, 129, 0.25);
 
-  --accent:         #6c63ff;
-  --accent-light:   #8b85ff;
-  --accent-dark:    #4a44cc;
-  --cyan:           #00d4ff;
-  --cyan-dark:      #00a8cc;
+  --accent:         #FDA481;   /* Sunset Peach   — primary CTA        */
+  --accent-light:   #ffb99a;   /* Lighter peach                       */
+  --accent-dark:    #e07a52;   /* Deeper peach                        */
+  --accent-glow:    rgba(253, 164, 129, 0.25);
 
-  --green:          #00ff88;
-  --green-dark:     #00cc6a;
-  --green-bg:       rgba(0, 255, 136, 0.1);
-  --red:            #ff4757;
-  --red-dark:       #cc3344;
-  --red-bg:         rgba(255, 71, 87, 0.1);
-  --yellow:         #ffd700;
-  --yellow-bg:      rgba(255, 215, 0, 0.1);
+  --danger:         #B4182D;   /* Crimson Red    — danger / sells      */
+  --danger-light:   #d4253f;
+  --danger-bg:      rgba(180, 24, 45, 0.15);
+  --plum:           #54162B;   /* Dark Plum      — deep accent         */
 
-  --sector-tech:       #6c63ff;
-  --sector-finance:    #00d4ff;
-  --sector-energy:     #ffd700;
-  --sector-healthcare: #00ff88;
-  --sector-consumer:   #ff6b9d;
+  /* ── Semantic status (keep green/red for P&L — financial convention) */
+  --green:          #2dd4a0;
+  --green-dark:     #1fb886;
+  --green-bg:       rgba(45, 212, 160, 0.1);
+  --red:            #B4182D;
+  --red-dark:       #8f1122;
+  --red-bg:         rgba(180, 24, 45, 0.12);
+  --yellow:         #f5c842;
+  --yellow-bg:      rgba(245, 200, 66, 0.1);
 
-  --text-primary:   #f0f4ff;
-  --text-secondary: #8892b0;
-  --text-muted:     #4a5568;
-  --text-accent:    #6c63ff;
+  /* ── Sector colors (muted, on-palette) */
+  --sector-tech:       #FDA481;
+  --sector-finance:    #ffb99a;
+  --sector-energy:     #f5c842;
+  --sector-healthcare: #2dd4a0;
+  --sector-consumer:   #d4a0fd;
 
+  /* ── Text ── */
+  --text-primary:   #F8FAFC;   /* Near-white — headings & values       */
+  --text-secondary: #bbc4d8;   /* Soft blue-gray                       */
+  --text-muted:     #6b7a99;   /* Muted — labels, placeholders         */
+  --text-accent:    #FDA481;   /* Peach — highlighted text             */
+  --text-inverse:   #181A2F;   /* Dark — on peach button text          */
+
+  /* ── Layout ── */
   --sidebar-w: 230px;
   --ticker-h:  40px;
 
-  --shadow-sm:    0 2px 8px rgba(0,0,0,0.4);
-  --shadow-md:    0 4px 20px rgba(0,0,0,0.5);
-  --shadow-lg:    0 8px 40px rgba(0,0,0,0.6);
-  --shadow-glow:  0 0 30px rgba(108,99,255,0.15);
-  --shadow-green: 0 0 20px rgba(0,255,136,0.2);
-  --shadow-red:   0 0 20px rgba(255,71,87,0.2);
+  /* ── Shadows ── */
+  --shadow-sm:     0 2px 8px  rgba(0,0,0,0.45);
+  --shadow-md:     0 4px 20px rgba(0,0,0,0.55);
+  --shadow-lg:     0 8px 40px rgba(0,0,0,0.65);
+  --shadow-glow:   0 0 30px   rgba(253,164,129,0.12);
+  --shadow-accent: 0 4px 18px rgba(253,164,129,0.3);
+  --shadow-green:  0 0 20px   rgba(45,212,160,0.2);
+  --shadow-red:    0 0 20px   rgba(180,24,45,0.25);
 
+  /* ── Radii ── */
   --r-sm:   8px;
   --r-md:   12px;
   --r-lg:   16px;
   --r-xl:   24px;
   --r-full: 9999px;
 
+  /* ── Transitions ── */
   --t-fast:   0.15s ease;
   --t-normal: 0.25s ease;
   --t-slow:   0.4s ease;
@@ -80,7 +95,7 @@ html, body {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-base);
   color: var(--text-primary);
   line-height: 1.5;
@@ -94,6 +109,7 @@ body {
 
 /* ── Typography ───────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
+  font-family: 'Instrument Serif', 'Plus Jakarta Sans', serif;
   font-weight: 700;
   line-height: 1.2;
   color: var(--text-primary);
@@ -103,23 +119,39 @@ code, .mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
+/* Page titles use Instrument Serif for editorial weight */
+.page-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* Brand name uses serif for premium feel */
+.sidebar-brand-name {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+}
+
 /* ── Scrollbar ────────────────────────────────────────────── */
 ::-webkit-scrollbar         { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track   { background: transparent; }
-::-webkit-scrollbar-thumb   { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+::-webkit-scrollbar-thumb   { background: var(--ui-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-dark); }
 
 /* ── App Shell Layout ─────────────────────────────────────── */
 .app-shell {
   display: flex;
   height: 100vh;
-  overflow: hidden;          /* prevent double scrollbars */
+  overflow: hidden;
 }
 
-/* Sidebar is fixed-width, the rest expands */
 .main-content {
   flex: 1;
-  min-width: 0;              /* crucial: prevents flex child overflow */
+  min-width: 0;
   margin-left: var(--sidebar-w);
   display: flex;
   flex-direction: column;
@@ -127,13 +159,12 @@ code, .mono {
   overflow: hidden;
 }
 
-/* Scrollable page area below the ticker */
 .page-content {
   flex: 1;
   padding: 24px 28px 32px;
   overflow-y: auto;
   overflow-x: hidden;
-  min-height: 0;             /* crucial: allows flex child to shrink */
+  min-height: 0;
 }
 
 /* ── Glass Card ───────────────────────────────────────────── */
@@ -143,13 +174,13 @@ code, .mono {
   border-radius: var(--r-lg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: border-color var(--t-normal), box-shadow var(--t-normal);
-  min-width: 0;              /* prevent overflow in grids */
+  transition: border-color var(--t-normal), box-shadow var(--t-normal), transform var(--t-normal);
+  min-width: 0;
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: var(--shadow-md);
+  border-color: rgba(253, 164, 129, 0.2);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(253,164,129,0.05);
 }
 
 /* ── Buttons ──────────────────────────────────────────────── */
@@ -171,42 +202,49 @@ code, .mono {
 }
 
 .btn:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
   transform: none !important;
 }
 
+/* Primary — Sunset Peach CTA */
 .btn-primary {
   background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-  color: white;
-  box-shadow: 0 4px 14px rgba(108,99,255,0.3);
+  color: var(--text-inverse);
+  font-weight: 700;
+  box-shadow: var(--shadow-accent);
 }
 .btn-primary:hover:not(:disabled) {
   background: linear-gradient(135deg, var(--accent-light), var(--accent));
-  box-shadow: 0 6px 20px rgba(108,99,255,0.45);
+  box-shadow: 0 6px 22px rgba(253,164,129,0.45);
   transform: translateY(-1px);
 }
 
+/* Buy — Green */
 .btn-buy {
-  background: linear-gradient(135deg, var(--green-dark), #00aa55);
-  color: #000;
-  box-shadow: 0 4px 14px rgba(0,255,136,0.2);
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  color: #0a1a14;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(45,212,160,0.25);
 }
 .btn-buy:hover:not(:disabled) {
   box-shadow: var(--shadow-green);
   transform: translateY(-1px);
 }
 
+/* Sell — Crimson */
 .btn-sell {
-  background: linear-gradient(135deg, var(--red-dark), #aa2233);
-  color: white;
-  box-shadow: 0 4px 14px rgba(255,71,87,0.2);
+  background: linear-gradient(135deg, var(--danger), var(--plum));
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(180,24,45,0.3);
 }
 .btn-sell:hover:not(:disabled) {
   box-shadow: var(--shadow-red);
   transform: translateY(-1px);
 }
 
+/* Ghost */
 .btn-ghost {
   background: transparent;
   color: var(--text-secondary);
@@ -215,11 +253,11 @@ code, .mono {
 .btn-ghost:hover:not(:disabled) {
   background: var(--bg-glass-hover);
   color: var(--text-primary);
-  border-color: rgba(255,255,255,0.15);
+  border-color: var(--border-active);
 }
 
-.btn-sm  { padding: 5px 12px; font-size: 12.5px; border-radius: var(--r-sm); }
-.btn-lg  { padding: 13px 26px; font-size: 15px; border-radius: var(--r-lg); }
+.btn-sm   { padding: 5px 12px;  font-size: 12.5px; border-radius: var(--r-sm); }
+.btn-lg   { padding: 13px 26px; font-size: 15px;   border-radius: var(--r-lg); }
 .btn-full { width: 100%; justify-content: center; }
 
 /* ── Form Inputs ──────────────────────────────────────────── */
@@ -239,7 +277,7 @@ code, .mono {
 
 .input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+  box-shadow: 0 0 0 3px rgba(253,164,129,0.15);
 }
 
 .input::placeholder {
@@ -260,15 +298,15 @@ code, .mono {
   flex-shrink: 0;
 }
 
-.badge-green      { background: var(--green-bg);  color: var(--green);  }
-.badge-red        { background: var(--red-bg);    color: var(--red);    }
-.badge-yellow     { background: var(--yellow-bg); color: var(--yellow); }
-.badge-accent     { background: rgba(108,99,255,0.15); color: var(--accent-light); }
-.badge-tech       { background: rgba(108,99,255,0.15); color: var(--sector-tech); }
-.badge-finance    { background: rgba(0,212,255,0.12);  color: var(--sector-finance); }
-.badge-energy     { background: rgba(255,215,0,0.12);  color: var(--sector-energy); }
-.badge-healthcare { background: rgba(0,255,136,0.12);  color: var(--sector-healthcare); }
-.badge-consumer   { background: rgba(255,107,157,0.12);color: var(--sector-consumer); }
+.badge-green      { background: var(--green-bg);    color: var(--green); }
+.badge-red        { background: var(--red-bg);      color: var(--red);   }
+.badge-yellow     { background: var(--yellow-bg);   color: var(--yellow); }
+.badge-accent     { background: rgba(253,164,129,0.12); color: var(--accent); }
+.badge-tech       { background: rgba(253,164,129,0.12); color: var(--sector-tech); }
+.badge-finance    { background: rgba(255,185,154,0.1);  color: var(--sector-finance); }
+.badge-energy     { background: rgba(245,200,66,0.1);   color: var(--sector-energy); }
+.badge-healthcare { background: rgba(45,212,160,0.1);   color: var(--sector-healthcare); }
+.badge-consumer   { background: rgba(212,160,253,0.1);  color: var(--sector-consumer); }
 
 /* ── Price Colors ─────────────────────────────────────────── */
 .price-up   { color: var(--green); }
@@ -276,7 +314,6 @@ code, .mono {
 .price-flat { color: var(--text-secondary); }
 
 /* ── Grid Layouts ─────────────────────────────────────────── */
-/* Each grid ensures children don't overflow */
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -369,7 +406,7 @@ code, .mono {
   flex-shrink: 0;
 }
 
-.ticker-item .ticker-symbol { color: var(--text-primary); font-weight: 700; }
+.ticker-item .ticker-symbol { color: var(--text-primary);   font-weight: 700; }
 .ticker-item .ticker-price  { color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
 
 /* ── Page Headers ─────────────────────────────────────────── */
@@ -387,6 +424,17 @@ code, .mono {
   font-weight: 800;
   color: var(--text-primary);
   white-space: nowrap;
+}
+
+/* Accent underline on page titles */
+.page-title::after {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 2px;
+  margin-top: 5px;
 }
 
 .page-subtitle {
@@ -411,7 +459,6 @@ code, .mono {
 }
 
 /* ── Data Table ───────────────────────────────────────────── */
-/* Wrap with .table-wrapper for horizontal scroll */
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
@@ -422,14 +469,14 @@ code, .mono {
   width: 100%;
   border-collapse: collapse;
   font-size: 13.5px;
-  min-width: 600px;          /* prevent columns from squashing */
+  min-width: 600px;
 }
 
 .data-table th {
   text-align: left;
   color: var(--text-muted);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 10px 14px;
@@ -440,13 +487,14 @@ code, .mono {
 
 .data-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(55,65,92,0.5);
   vertical-align: middle;
   transition: background var(--t-fast);
+  color: var(--text-primary);
 }
 
 .data-table tr:hover td {
-  background: var(--bg-glass-hover);
+  background: rgba(253,164,129,0.04);
 }
 
 .data-table tr:last-child td {
@@ -457,8 +505,8 @@ code, .mono {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(7,11,20,0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(24, 26, 47, 0.88);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -468,12 +516,12 @@ code, .mono {
 
 .modal-box {
   background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-active);
   border-radius: var(--r-xl);
   padding: 26px;
   width: 100%;
   max-width: 420px;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(253,164,129,0.08);
   position: relative;
   max-height: 90vh;
   overflow-y: auto;
@@ -526,13 +574,13 @@ code, .mono {
 }
 
 @keyframes pulse-green {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,136,0); }
-  50%       { box-shadow: 0 0 0 5px rgba(0,255,136,0.12); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(45,212,160,0); }
+  50%       { box-shadow: 0 0 0 5px rgba(45,212,160,0.1); }
 }
 
 @keyframes pulse-red {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,71,87,0); }
-  50%       { box-shadow: 0 0 0 5px rgba(255,71,87,0.12); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(180,24,45,0); }
+  50%       { box-shadow: 0 0 0 5px rgba(180,24,45,0.12); }
 }
 
 @keyframes shimmer {
@@ -540,13 +588,18 @@ code, .mono {
   100% { background-position: 200% 0; }
 }
 
+@keyframes peachPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(253,164,129,0); }
+  50%       { box-shadow: 0 0 0 6px rgba(253,164,129,0.12); }
+}
+
 .anim-fade-in { animation: fadeIn 0.35s ease; }
 .anim-fade-up { animation: fadeInUp 0.35s ease; }
 
 /* ── Pulse dot (market status) ────────────────────────────── */
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
-  50%       { opacity: 0.8; box-shadow: 0 0 0 4px rgba(0,255,136,0); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(45,212,160,0.4); }
+  50%       { opacity: 0.8; box-shadow: 0 0 0 4px rgba(45,212,160,0); }
 }
 
 /* ── Skeleton ─────────────────────────────────────────────── */
@@ -557,18 +610,6 @@ code, .mono {
   border-radius: var(--r-sm);
 }
 
-/* ── Utility ──────────────────────────────────────────────── */
-.w-full  { width: 100%; }
-.min-w-0 { min-width: 0; }
-.overflow-hidden { overflow: hidden; }
-.text-sm     { font-size: 12.5px; }
-.text-xs     { font-size: 11.5px; }
-.text-muted  { color: var(--text-muted); }
-.text-secondary { color: var(--text-secondary); }
-.font-bold   { font-weight: 700; }
-.font-medium { font-weight: 500; }
-.font-mono   { font-family: 'JetBrains Mono', monospace; }
-
 /* ── Divider ──────────────────────────────────────────────── */
 .divider {
   height: 1px;
@@ -576,36 +617,60 @@ code, .mono {
   margin: 16px 0;
 }
 
+/* ── Utility ──────────────────────────────────────────────── */
+.w-full           { width: 100%; }
+.min-w-0          { min-width: 0; }
+.overflow-hidden   { overflow: hidden; }
+.text-sm          { font-size: 12.5px; }
+.text-xs          { font-size: 11.5px; }
+.text-muted       { color: var(--text-muted); }
+.text-secondary   { color: var(--text-secondary); }
+.font-bold        { font-weight: 700; }
+.font-medium      { font-weight: 500; }
+.font-mono        { font-family: 'JetBrains Mono', monospace; }
+
 /* ── Flex Helpers ─────────────────────────────────────────── */
-.flex           { display: flex; }
-.flex-col       { flex-direction: column; }
-.items-center   { align-items: center; }
+.flex            { display: flex; }
+.flex-col        { flex-direction: column; }
+.items-center    { align-items: center; }
 .justify-between { justify-content: space-between; }
-.gap-2          { gap: 8px; }
-.gap-3          { gap: 12px; }
+.gap-2           { gap: 8px; }
+.gap-3           { gap: 12px; }
+
+/* ── Live Market badge ────────────────────────────────────── */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(45,212,160,0.1);
+  border: 1px solid rgba(45,212,160,0.25);
+  border-radius: var(--r-full);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green);
+}
+
+/* ── Accent highlight strip on cards ─────────────────────── */
+.card-accent-top {
+  border-top: 2px solid var(--accent);
+}
 
 /* ── Responsive Breakpoints ───────────────────────────────── */
-/* 1280px: moderate laptop */
 @media (max-width: 1280px) {
-  .grid-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stat-card .stat-value { font-size: 20px; }
 }
 
-/* 1024px: small laptop */
 @media (max-width: 1024px) {
   :root { --sidebar-w: 200px; }
   .page-content { padding: 18px 20px 28px; }
 }
 
-/* 768px: tablet-ish */
 @media (max-width: 768px) {
   :root { --sidebar-w: 0px; }
   .main-content { margin-left: 0; }
-  .grid-2, .grid-3, .grid-4 {
-    grid-template-columns: 1fr;
-  }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .page-content { padding: 16px; }
   .sidebar { display: none; }
 }

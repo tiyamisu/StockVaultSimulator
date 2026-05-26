@@ -5,6 +5,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
+import { TrendingUp, AlertTriangle, Info } from "lucide-react";
 import "./Login.css";
 
 // Demo credentials (shown to user)
@@ -58,7 +59,7 @@ export default function Login() {
       <div className="login-card">
         {/* Brand */}
         <div className="login-logo">
-          <div className="login-logo-icon">📈</div>
+          <div className="login-logo-icon"><TrendingUp size={26} color="white" /></div>
           <div className="login-logo-text">
             <h1>StockVault</h1>
             <p>Virtual Trading Platform</p>
@@ -102,7 +103,10 @@ export default function Login() {
           </div>
 
           {error && (
-            <div className="login-error">⚠️ {error}</div>
+            <div className="login-error" style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <AlertTriangle size={15} style={{ flexShrink: 0 }} />
+              {error}
+            </div>
           )}
 
           <button
@@ -116,8 +120,9 @@ export default function Login() {
         </form>
 
         {/* Demo credentials hint */}
-        <div className="login-demo-hint">
-          🎯 <strong>Demo:</strong> username: <strong>demo</strong> · password: <strong>demo123</strong>
+        <div className="login-demo-hint" style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "center" }}>
+          <Info size={13} style={{ flexShrink: 0, color: "var(--accent)" }} />
+          <span><strong>Demo:</strong> username: <strong>demo</strong> · password: <strong>demo123</strong></span>
         </div>
 
         {/* Stats */}

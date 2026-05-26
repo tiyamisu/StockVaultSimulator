@@ -82,9 +82,9 @@ export default function Market() {
           {["ticker", "price", "change"].map((s) => (
             <button key={s} className="btn btn-sm btn-ghost" onClick={() => setSort(s)}
               style={{
-                background: sort === s ? "rgba(108,99,255,0.15)" : "",
-                color: sort === s ? "var(--accent-light)" : "",
-                borderColor: sort === s ? "rgba(108,99,255,0.3)" : "",
+                background: sort === s ? "rgba(253,164,129,0.15)" : "",
+                color: sort === s ? "var(--accent)" : "",
+                borderColor: sort === s ? "rgba(253,164,129,0.35)" : "",
               }}>
               {s.charAt(0).toUpperCase() + s.slice(1)}
             </button>
@@ -99,9 +99,9 @@ export default function Market() {
             padding: "5px 14px", borderRadius: "var(--r-full)", fontSize: 12.5, fontWeight: 600,
             border: "1px solid", cursor: "pointer", fontFamily: "inherit",
             transition: "all var(--t-fast)",
-            background: sector === s ? "rgba(108,99,255,0.15)" : "transparent",
+            background: sector === s ? "rgba(253,164,129,0.15)" : "transparent",
             borderColor: sector === s ? "var(--accent)" : "var(--border)",
-            color: sector === s ? "var(--accent-light)" : "var(--text-secondary)",
+            color: sector === s ? "var(--accent)" : "var(--text-secondary)",
           }}>
             {s}
           </button>
@@ -137,7 +137,7 @@ export default function Market() {
                 return (
                   <>
                     <tr key={stock.ticker}
-                      style={{ cursor: "pointer", background: isSelected ? "rgba(108,99,255,0.06)" : "" }}
+                      style={{ cursor: "pointer", background: isSelected ? "rgba(253,164,129,0.06)" : "" }}
                       onClick={() => setSelected(isSelected ? null : stock)}
                     >
                       <td>
@@ -180,7 +180,7 @@ export default function Market() {
                     {/* ── Expanded chart row ─────────────────────── */}
                     {isSelected && (
                       <tr key={`${stock.ticker}-detail`}>
-                        <td colSpan={8} style={{ padding: 0, background: "rgba(108,99,255,0.03)" }}>
+                        <td colSpan={8} style={{ padding: 0, background: "rgba(253,164,129,0.03)" }}>
                           <div style={{ padding: "18px 20px" }}>
                             <div style={{ display: "flex", gap: 16, justifyContent: "space-between", flexWrap: "wrap", marginBottom: 14 }}>
                               {/* Info */}
@@ -220,8 +220,8 @@ export default function Market() {
                                 <AreaChart data={stock.history} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
                                   <defs>
                                     <linearGradient id={`grad-${stock.ticker}`} x1="0" y1="0" x2="0" y2="1">
-                                      <stop offset="0%" stopColor={isUp ? "#00ff88" : "#ff4757"} stopOpacity={0.28} />
-                                      <stop offset="100%" stopColor={isUp ? "#00ff88" : "#ff4757"} stopOpacity={0.01} />
+                                      <stop offset="0%" stopColor={isUp ? "#2dd4a0" : "#B4182D"} stopOpacity={0.28} />
+                                      <stop offset="100%" stopColor={isUp ? "#2dd4a0" : "#B4182D"} stopOpacity={0.01} />
                                     </linearGradient>
                                   </defs>
                                   <XAxis dataKey="date" tick={{ fill: "var(--text-muted)", fontSize: 10 }} axisLine={false} tickLine={false} interval={4} />
@@ -247,7 +247,7 @@ export default function Market() {
 
         {filtered.length === 0 && (
           <div className="empty-state">
-            <div className="empty-state-icon">🔍</div>
+            <div className="empty-state-icon"><Search size={38} strokeWidth={1.5} color="var(--text-muted)" /></div>
             <div className="empty-state-text">No stocks found</div>
             <div className="empty-state-sub">Try a different search or sector</div>
           </div>
